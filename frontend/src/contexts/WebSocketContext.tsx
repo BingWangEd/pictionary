@@ -27,18 +27,17 @@ export const useWebSocketContext = () => useContext(WebSocketContext);
 
 export const WebSocketProvider: FunctionComponent = ({ children }) => {
   const [webSocket, setWebSocket] = useState<SocketIOClient.Socket | null>(null);
+  const [joinedRoom, setJoinedRoom] = useState<string | undefined>();
 
   useEffect(() => {
     if (!webSocket) {
       const socket = io.connect('http://localhost:3030');
 
       socket.on('new member', () => console.log('new member'));
-      console.log('socket: ', socket);
+      socket.on('joined room', (data: any) => setJoinedRoom(data.room));
       setWebSocket(socket);
     }
   }, []);
-
-  
 
   const setName = useCallback((name: string) => {
     webSocket && webSocket.emit(
@@ -54,7 +53,6 @@ export const WebSocketProvider: FunctionComponent = ({ children }) => {
         WebSocketEvent.EnterRoom,
         { roomName },
       );
-      console.log(`join room ${roomName}`);
     }
   }, [webSocket]);
 

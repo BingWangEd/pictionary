@@ -1,15 +1,18 @@
 import React from 'react';
 import { WebSocketProvider } from './contexts/WebSocketContext';
-import GetGameRoom from './components/GetGameRoom/GetGameRoom';
+import { GameStateContextProvider } from './contexts/GameStateContext';
+import GameCoordinator from './components/GameCoordinator';
 import './App.css';
 
 function App() {
   return (
-    <WebSocketProvider>
-      <div className="App">
-        <GetGameRoom />
-      </div>
-    </WebSocketProvider>
+    <GameStateContextProvider>
+      <WebSocketProvider>
+        <div className="App">
+          <GameCoordinator />
+        </div>
+      </WebSocketProvider>
+    </GameStateContextProvider>
   );
 }
 

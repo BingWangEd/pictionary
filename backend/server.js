@@ -49,6 +49,7 @@ io.on('connection', (client) => {
 
     client.join(selectedRoom);
     CurrentRooms.push(selectedRoom);
+    client.emit(`joined room`, { room: selectedRoom });
     io.to(selectedRoom).emit('new member');
 
     // console.log('all rooms', io.sockets.adapter.rooms);
