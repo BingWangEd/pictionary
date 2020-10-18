@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node_modules/.bin/nodemon server.js"
+  },
   "dependencies": {
     "nodemon": "^2.0.4",
     "socket.io": "^2.3.0"
