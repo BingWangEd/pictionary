@@ -17,6 +17,7 @@ const GetGameRoom = () => {
         label={'Enter A Room You Want to Join'}
         onSubmit={handleSubmit}
       />
+      <h4>or</h4>
       <CreateRoom />
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, FunctionComponent } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, FunctionComponent } from 'react';
 
 export enum WebSocketEvent {
   CreateRoom = 'Create Room',
@@ -39,41 +39,39 @@ export const WebSocketProvider: FunctionComponent = ({ children }) => {
     }
   }, []);
 
-  const setName = useCallback((name: string) => {
-    webSocket && webSocket.emit(
-      WebSocketEvent.SetName,
-      { name },
-      () => console.log('Recorded name')
-    )
-  }, [webSocket]);
+  const setName = useCallback(
+    (name: string) => {
+      webSocket && webSocket.emit(WebSocketEvent.SetName, { name }, () => console.log('Recorded name'));
+    },
+    [webSocket],
+  );
 
-  const enterRoom = useCallback((roomName: string) => {
-    if (webSocket) {
-      webSocket.emit(
-        WebSocketEvent.EnterRoom,
-        { roomName },
-      );
-    }
-  }, [webSocket]);
+  const enterRoom = useCallback(
+    (roomName: string) => {
+      if (webSocket) {
+        webSocket.emit(WebSocketEvent.EnterRoom, { roomName });
+      }
+    },
+    [webSocket],
+  );
 
   const createRoom = useCallback(() => {
     if (webSocket) {
-      webSocket.emit(
-        WebSocketEvent.CreateRoom,
-      );
+      webSocket.emit(WebSocketEvent.CreateRoom);
       console.log('Create a new room');
     }
   }, [webSocket]);
 
   return (
-    <WebSocketContext.Provider value={{
-      connected: webSocket !== null,
-      handleEnterRoom: enterRoom,
-      handleCreateRoom: createRoom,
-      handleSetName: setName,
-    }}>
+    <WebSocketContext.Provider
+      value={{
+        connected: webSocket !== null,
+        handleEnterRoom: enterRoom,
+        handleCreateRoom: createRoom,
+        handleSetName: setName,
+      }}
+    >
       {children}
     </WebSocketContext.Provider>
   );
 };
-
